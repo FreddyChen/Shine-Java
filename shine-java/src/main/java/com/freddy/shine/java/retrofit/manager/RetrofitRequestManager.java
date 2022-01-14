@@ -1,16 +1,31 @@
 package com.freddy.shine.java.retrofit.manager;
 
 import android.text.TextUtils;
+import android.util.ArrayMap;
 
 import com.freddy.shine.java.AbstractRequestManager;
 import com.freddy.shine.java.cipher.ICipher;
+import com.freddy.shine.java.config.NetworkConfig;
+import com.freddy.shine.java.config.RequestMethod;
 import com.freddy.shine.java.config.RequestOptions;
 import com.freddy.shine.java.exception.RequestException;
 import com.freddy.shine.java.listener.OnResponseListener;
 import com.freddy.shine.java.parser.IParser;
+import com.freddy.shine.java.retrofit.api.IApiService;
+import com.freddy.shine.java.utils.RxExecutor;
 import com.freddy.shine.java.utils.ShineLog;
 
 import java.lang.reflect.Type;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author: FreddyChen
@@ -19,7 +34,8 @@ import java.lang.reflect.Type;
  */
 public class RetrofitRequestManager extends AbstractRequestManager {
 
-    private RetrofitRequestManager() {}
+    private RetrofitRequestManager() {
+    }
 
     public static RetrofitRequestManager getInstance() {
         return SingletonHolder.INSTANCE;
@@ -56,10 +72,123 @@ public class RetrofitRequestManager extends AbstractRequestManager {
             }
             return;
         }
+
+        IApiService apiService = RetrofitManager.getInstance().getRetrofit(baseUrl).create(IApiService.class);
+
+        ArrayMap<String, Object> headers = options.getHeaders();
+        RetrofitManager.getInstance().saveHeaders(baseUrl + function, headers);
+
+        if (cipherCls != null) {
+            RetrofitManager.getInstance().saveCipher(baseUrl + function, cipherCls);
+        }
+
+        Observable<String> observable = null;
+        ArrayMap<String, Object> params = options.getParams();
+        String contentType = options.getContentType();
+        RequestMethod requestMethod = options.getRequestMethod();
+        switch (requestMethod) {
+            case GET: {
+                if (params == null || params.isEmpty()) {
+                    observable = apiService.get(options);
+                } else {
+                    observable = apiService.get(options, params);
+                }
+                break;
+            }
+            case POST: {
+                if (params == null || params.isEmpty()) {
+                    observable = apiService.post(options);
+                } else {
+                    observable = apiService.post(options, convertParamsToRequestBody(params, contentType));
+                }
+                break;
+            }
+            case PUT: {
+                if (params == null || params.isEmpty()) {
+                    observable = apiService.put(options);
+                } else {
+                    observable = apiService.put(options, convertParamsToRequestBody(params, contentType));
+                }
+                break;
+            }
+            case DELETE: {
+                if (params == null || params.isEmpty()) {
+                    observable = apiService.delete(options);
+                } else {
+                    observable = apiService.delete(options, params);
+                }
+                break;
+            }
+        }
+
+        if (observable == null) {
+            if (listener != null) {
+                listener.onFailure(new RequestException(RequestException.Type.NETWORK, "request failure, reason: observable is null"));
+                listener.onFinish();
+            }
+            return;
+        }
+
+        observable.subscribeOn(Schedulers.from(RxExecutor.getInstance()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+
+                    private volatile Disposable mDisposable;
+
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        this.mDisposable = d;
+                    }
+
+                    @Override
+                    public void onNext(@NonNull String s) {
+                        try {
+                            T result = parse(s, type, parserCls);
+                            if (listener != null) {
+                                listener.onSuccessful(result);
+                            }
+                            onComplete();
+                        } catch (RequestException e) {
+                            onError(e);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        onError(new RequestException(RequestException.Type.NATIVE, e.getMessage()));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (mDisposable != null && !mDisposable.isDisposed()) {
+                            mDisposable.dispose();
+                        }
+                        this.mDisposable = null;
+
+                        if (listener != null) {
+                            listener.onFinish();
+                        }
+                    }
+
+                    private void onError(RequestException e) {
+                        if (listener != null) {
+                            listener.onFailure(e);
+                        }
+                        onComplete();
+                    }
+                });
     }
 
     @Override
     public <T> void syncRequest(RequestOptions options, Type type, Class<? extends IParser> parserCls, Class<? extends ICipher> cipherCls, OnResponseListener<T> listener) {
 
+    }
+
+    /**
+     * 将请求参数转换到RequestBody
+     * POST/PUT请求适用
+     */
+    private RequestBody convertParamsToRequestBody(ArrayMap<String, Object> params, String contentType) {
+        return RequestBody.Companion.create(gson.toJson(params), MediaType.parse(contentType));
     }
 }

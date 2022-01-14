@@ -17,10 +17,10 @@ import com.freddy.shine.java.parser.IParser;
  */
 public class ShineOptions {
 
-    private boolean logEnable;
-    private String logTag;
-    private String baseUrl;
-    private Class<? extends IParser> parserCls;
+    private final boolean logEnable;
+    private final String logTag;
+    private final String baseUrl;
+    private final Class<? extends IParser> parserCls;
 
     private ShineOptions(Builder builder) {
         this.logEnable = builder.logEnable;

@@ -18,12 +18,12 @@ import android.util.ArrayMap;
  */
 public class RequestOptions {
 
-    private RequestMethod requestMethod;
-    private String baseUrl;
-    private String function;
-    private ArrayMap<String, Object> headers;
-    private ArrayMap<String, Object> params;
-    private String contentType;
+    private final RequestMethod requestMethod;
+    private final String baseUrl;
+    private final String function;
+    private final ArrayMap<String, Object> headers;
+    private final ArrayMap<String, Object> params;
+    private final String contentType;
 
     private RequestOptions(Builder builder) {
         this.requestMethod = builder.requestMethod;

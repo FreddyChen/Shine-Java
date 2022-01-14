@@ -30,7 +30,7 @@ public class DefaultResponseModel<T> extends AbstractResponseModel {
     }
 
     @Override
-    boolean isSuccessful() {
+    public boolean isSuccessful() {
         return this.code == 0;
     }
 

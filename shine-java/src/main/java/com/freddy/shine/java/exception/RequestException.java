@@ -12,7 +12,7 @@ package com.freddy.shine.java.exception;
  * @date : 2022/01/14 11:23
  * @email : freddychencsc@gmail.com
  */
-public class RequestException {
+public class RequestException extends Throwable {
 
     public enum Type {
         NATIVE,
@@ -40,7 +40,12 @@ public class RequestException {
         this(type, 200, 0xfc1, errMsg);
     }
 
+    public RequestException(Type type, int errCode, String errMsg) {
+        this(type, 200, errCode, errMsg);
+    }
+
     public RequestException(Type type, int statusCode, int errCode, String errMsg) {
+        super(errMsg);
         this.type = type;
         this.statusCode = statusCode;
         this.errCode = errCode;

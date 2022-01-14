@@ -11,5 +11,5 @@ package com.freddy.shine.java.model;
  */
 public abstract class AbstractResponseModel {
 
-    abstract boolean isSuccessful();
+    public abstract boolean isSuccessful();
 }
