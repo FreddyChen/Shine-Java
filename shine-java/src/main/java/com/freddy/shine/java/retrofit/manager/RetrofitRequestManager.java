@@ -89,33 +89,33 @@ public class RetrofitRequestManager extends AbstractRequestManager {
         switch (requestMethod) {
             case GET: {
                 if (params == null || params.isEmpty()) {
-                    observable = apiService.get(options);
+                    observable = apiService.get(function);
                 } else {
-                    observable = apiService.get(options, params);
+                    observable = apiService.get(function, params);
                 }
                 break;
             }
             case POST: {
                 if (params == null || params.isEmpty()) {
-                    observable = apiService.post(options);
+                    observable = apiService.post(function);
                 } else {
-                    observable = apiService.post(options, convertParamsToRequestBody(params, contentType));
+                    observable = apiService.post(function, convertParamsToRequestBody(params, contentType));
                 }
                 break;
             }
             case PUT: {
                 if (params == null || params.isEmpty()) {
-                    observable = apiService.put(options);
+                    observable = apiService.put(function);
                 } else {
-                    observable = apiService.put(options, convertParamsToRequestBody(params, contentType));
+                    observable = apiService.put(function, convertParamsToRequestBody(params, contentType));
                 }
                 break;
             }
             case DELETE: {
                 if (params == null || params.isEmpty()) {
-                    observable = apiService.delete(options);
+                    observable = apiService.delete(function);
                 } else {
-                    observable = apiService.delete(options, params);
+                    observable = apiService.delete(function, params);
                 }
                 break;
             }

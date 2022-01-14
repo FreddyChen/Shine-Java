@@ -11,7 +11,7 @@ package com.freddy.shine.java.model;
  * @date : 2022/01/14 10:51
  * @email : freddychencsc@gmail.com
  */
-public class DefaultResponseModel<T> extends AbstractResponseModel {
+public class DefaultResponseModel<T> implements IResponseModel {
 
     private int code;
     private String msg;

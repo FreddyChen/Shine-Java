@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 
 /**
  * 统一的请求方式
@@ -40,50 +41,50 @@ import retrofit2.http.QueryMap;
 public interface IApiService {
 
     @GET
-    Observable<String> get(RequestOptions options);
+    Observable<String> get(@Url String function);
 
     @GET
-    Observable<String> get(RequestOptions options, @QueryMap ArrayMap<String, Object> params);
+    Observable<String> get(@Url String function, @QueryMap ArrayMap<String, Object> params);
 
     @POST
-    Observable<String> post(RequestOptions options);
+    Observable<String> post(@Url String function);
 
     @POST
-    Observable<String> post(RequestOptions options, @Body RequestBody body);
+    Observable<String> post(@Url String function, @Body RequestBody body);
 
     @PUT
-    Observable<String> put(RequestOptions options);
+    Observable<String> put(@Url String function);
 
     @PUT
-    Observable<String> put(RequestOptions options, @Body RequestBody body);
+    Observable<String> put(@Url String function, @Body RequestBody body);
 
     @DELETE
-    Observable<String> delete(RequestOptions options);
+    Observable<String> delete(@Url String function);
 
     @DELETE
-    Observable<String> delete(RequestOptions options, @QueryMap ArrayMap<String, Object> params);
+    Observable<String> delete(@Url String function, @QueryMap ArrayMap<String, Object> params);
 
     @GET
-    Call<String> syncGet(RequestOptions options);
+    Call<String> syncGet(@Url String function);
 
     @GET
-    Call<String> syncGet(RequestOptions options, @QueryMap ArrayMap<String, Object> params);
+    Call<String> syncGet(@Url String function, @QueryMap ArrayMap<String, Object> params);
 
     @POST
-    Call<String> syncPost(RequestOptions options);
+    Call<String> syncPost(@Url String function);
 
     @POST
-    Call<String> syncPost(RequestOptions options, @Body RequestBody body);
+    Call<String> syncPost(@Url String function, @Body RequestBody body);
 
     @PUT
-    Call<String> syncPut(RequestOptions options);
+    Call<String> syncPut(@Url String function);
 
     @PUT
-    Call<String> syncPut(RequestOptions options, @Body RequestBody body);
+    Call<String> syncPut(@Url String function, @Body RequestBody body);
 
     @DELETE
-    Call<String> syncDelete(RequestOptions options);
+    Call<String> syncDelete(@Url String function);
 
     @DELETE
-    Call<String> syncDelete(RequestOptions options, @QueryMap ArrayMap<String, Object> params);
+    Call<String> syncDelete(@Url String function, @QueryMap ArrayMap<String, Object> params);
 }

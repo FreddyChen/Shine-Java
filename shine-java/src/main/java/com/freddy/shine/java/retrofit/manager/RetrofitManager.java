@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 
 /**
  * @author: FreddyChen
@@ -99,6 +100,7 @@ public class RetrofitManager {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(StringConverterFactory.create())
                 .client(getOkHttpClient())
                 .build();
