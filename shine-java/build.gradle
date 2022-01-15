@@ -51,3 +51,10 @@ dependencies {
     def rxjava_version = '3.1.3'
     implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
 }
+
+ext {
+    PUBLISH_GROUP_ID = "io.github.freddychen"       // 项目包名
+    PUBLISH_ARTIFACT_ID = 'shine-java'			// 项目名
+    PUBLISH_VERSION = '0.0.5'					    // 版本号
+}
+apply from: './scripts/publish-mavencentral.gradle'
