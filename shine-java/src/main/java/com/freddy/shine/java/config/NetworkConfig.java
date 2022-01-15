@@ -2,7 +2,7 @@ package com.freddy.shine.java.config;
 
 /**
  * 网络配置
- *
+ * <p>
  * @author: FreddyChen
  * @date : 2022/01/14 10:19
  * @email : freddychencsc@gmail.com

@@ -5,6 +5,7 @@ import com.freddy.shine.java.interf.IRequest;
 
 /**
  * Shine核心类
+ * <p>
  *
  * @author: FreddyChen
  * @date : 2022/01/14 10:56

@@ -8,6 +8,13 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 /**
+ * 默认数据解析器
+ * <p>
+ * ResponseModel包含<br />
+ * code<br />
+ * msg<br />
+ * data<br />
+ *
  * @author: FreddyChen
  * @date : 2022/01/14 10:43
  * @email : freddychencsc@gmail.com
@@ -17,7 +24,7 @@ public class DefaultParser extends AbstractParser {
     private static final String TAG = "DefaultParser";
 
     @Override
-    public <T> T parse(String data, Type type) throws RequestException {
+    public <T> T parse(String url, String data, Type type) throws RequestException {
         ShineLog.i(TAG + "#parse()\ndata = " + data + "\ntype = " + type);
         String errMsg = null;
         DefaultResponseModel<T> responseModel = null;
@@ -34,17 +41,14 @@ public class DefaultParser extends AbstractParser {
             errMsg = e.getMessage();
         }
 
-        if (responseModel == null) {
-            throw new RequestException(
-                    RequestException.Type.NATIVE,
-                    TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\nresponseModel = " + responseModel + "\ndata = " + data
-            );
-        } else {
-            throw new RequestException(
-                    RequestException.Type.NATIVE,
-                    responseModel.getCode(),
-                    TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\nresponseModel = " + responseModel + "\ndata = " + data
-            );
+        RequestException exception = new RequestException();
+        exception.setType(RequestException.Type.NATIVE);
+        exception.setUrl(url);
+        exception.setStatusCode(200);
+        exception.setErrMsg(TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\nresponseModel = " + responseModel + "\ndata = " + data);
+        if (responseModel != null) {
+            exception.setErrCode(responseModel.getCode());
         }
+        throw exception;
     }
 }

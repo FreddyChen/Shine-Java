@@ -77,4 +77,19 @@ public class Cat {
                     '}';
         }
     }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "status=" + status +
+                ", id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", deleted=" + deleted +
+                ", user='" + user + '\'' +
+                ", text='" + text + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", v=" + v +
+                '}';
+    }
 }

@@ -7,6 +7,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
+ * 用于通过Class<?>获取Type
+ * <p>
+ *
  * @author: FreddyChen
  * @date : 2022/01/15 02:58
  * @email : freddychencsc@gmail.com
@@ -15,6 +18,7 @@ public class ParameterizedTypeImpl implements ParameterizedType {
 
     private final Class<?> raw;
     private final Type[] args;
+
     public ParameterizedTypeImpl(Class<?> raw, Type[] args) {
         this.raw = raw;
         this.args = args != null ? args : new Type[0];

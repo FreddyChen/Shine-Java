@@ -18,6 +18,9 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
+ * 自定义StringConverterFactory
+ * <p>
+ *
  * @author: FreddyChen
  * @date : 2022/01/14 15:56
  * @email : freddychencsc@gmail.com

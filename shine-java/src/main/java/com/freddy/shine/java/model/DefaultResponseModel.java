@@ -3,9 +3,9 @@ package com.freddy.shine.java.model;
 /**
  * 默认的ResponseModel
  * <p>
- * code 返回码<br>
- * msg  返回信息<br>
- * data 返回数据<br>
+ * {@link #code} 返回码<br />
+ * {@link #msg}  返回信息<br />
+ * {@link #data} 返回数据<br />
  *
  * @author: FreddyChen
  * @date : 2022/01/14 10:51

@@ -17,7 +17,7 @@ public class CustomParser2 extends AbstractParser {
     private static final String TAG = "CustomParser1";
 
     @Override
-    public <T> T parse(String data, Type type) throws RequestException {
+    public <T> T parse(String url, String data, Type type) throws RequestException {
         ShineLog.i(TAG + "#parse()\ndata = " + data + "\ntype = " + type);
         String errMsg;
         try {
@@ -27,9 +27,11 @@ public class CustomParser2 extends AbstractParser {
             errMsg = e.getMessage();
         }
 
-        throw new RequestException(
-                RequestException.Type.NATIVE,
-                TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\ndata = " + data
-        );
+        RequestException exception = new RequestException();
+        exception.setType(RequestException.Type.NATIVE);
+        exception.setUrl(url);
+        exception.setStatusCode(200);
+        exception.setErrMsg(TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\ndata = " + data);
+        throw exception;
     }
 }

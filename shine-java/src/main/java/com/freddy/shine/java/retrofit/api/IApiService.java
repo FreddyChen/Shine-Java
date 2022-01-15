@@ -18,22 +18,22 @@ import retrofit2.http.Url;
 /**
  * 统一的请求方式
  *
- * {@link #get(RequestOptions)}
- * {@link #get(RequestOptions, ArrayMap)}
- * {@link #post(RequestOptions)}
- * {@link #post(RequestOptions, RequestBody)}
- * {@link #put(RequestOptions)}
- * {@link #put(RequestOptions, RequestBody)}
- * {@link #delete(RequestOptions)}
- * {@link #delete(RequestOptions, ArrayMap)}
- * {@link #syncGet(RequestOptions)}
- * {@link #syncGet(RequestOptions, ArrayMap)}
- * {@link #syncPost(RequestOptions)}
- * {@link #syncPost(RequestOptions, RequestBody)}
- * {@link #syncPut(RequestOptions)}
- * {@link #syncPut(RequestOptions, RequestBody)}
- * {@link #syncDelete(RequestOptions)}
- * {@link #syncDelete(RequestOptions, ArrayMap)}
+ * {@link #get(String)}
+ * {@link #get(String, ArrayMap)}
+ * {@link #post(String)}
+ * {@link #post(String, RequestBody)}
+ * {@link #put(String)}
+ * {@link #put(String, RequestBody)}
+ * {@link #delete(String)}
+ * {@link #delete(String, ArrayMap)}
+ * {@link #syncGet(String)}
+ * {@link #syncGet(String, ArrayMap)}
+ * {@link #syncPost(String)}
+ * {@link #syncPost(String, RequestBody)}
+ * {@link #syncPut(String)}
+ * {@link #syncPut(String, RequestBody)}
+ * {@link #syncDelete(String)}
+ * {@link #syncDelete(String, ArrayMap)}
  * @author: FreddyChen
  * @date : 2022/01/14 11:17
  * @email : freddychencsc@gmail.com

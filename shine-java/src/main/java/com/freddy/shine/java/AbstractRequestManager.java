@@ -11,9 +11,12 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * RequestManager抽象类，自定义RequestManager需继承此类
+ *
  * @author: FreddyChen
  * @date : 2022/01/14 11:54
  * @email : freddychencsc@gmail.com
+ * @see com.freddy.shine.java.retrofit.manager.RetrofitRequestManager
  */
 public abstract class AbstractRequestManager implements IRequest {
 
@@ -24,20 +27,24 @@ public abstract class AbstractRequestManager implements IRequest {
     /**
      * 解析数据
      */
-    protected <T> T parse(String data, Type type, Class<? extends IParser> parserCls) throws RequestException {
+    protected <T> T parse(String url, String data, Type type, Class<? extends IParser> parserCls) throws RequestException {
         ShineLog.i(getClass().getSimpleName(), "#parse()\ndata = " + data + "\ntype = " + type + "\nparserCls = " + parserCls);
         try {
-            return Objects.requireNonNull(getParser(parserCls)).parse(data, type);
+            return Objects.requireNonNull(getParser(url, parserCls)).parse(url, data, type);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new RequestException(RequestException.Type.NATIVE, getClass().getSimpleName() + "#parse failure\nreason: " + e.getMessage());
+            RequestException exception = new RequestException();
+            exception.setType(RequestException.Type.NATIVE);
+            exception.setUrl(url);
+            exception.setStatusCode(200);
+            exception.setErrMsg(getClass().getSimpleName() + "#parse failure\nreason: " + e.getMessage());
+            throw exception;
         }
     }
 
     /**
      * 获取Parser
      */
-    private IParser getParser(Class<? extends IParser> parserCls) throws RequestException {
+    private IParser getParser(String url, Class<? extends IParser> parserCls) throws RequestException {
         ShineLog.i(getClass().getSimpleName() + "#getParser()\nparserCls = " + parserCls + "\nmParserMap = " + mParserMap);
         Class<? extends IParser> cls = parserCls != null ? parserCls : ShineKit.getInstance().getShineOptions().getParserCls();
         if (cls == null) return null;
@@ -48,11 +55,12 @@ public abstract class AbstractRequestManager implements IRequest {
             try {
                 parser = (IParser) Class.forName(cls.getName()).newInstance();
             } catch (Exception e) {
-                e.printStackTrace();
-                throw new RequestException(
-                        RequestException.Type.NATIVE,
-                        getClass().getSimpleName() + "#getParser failure, reason: " + e.getMessage()
-                );
+                RequestException exception = new RequestException();
+                exception.setType(RequestException.Type.NATIVE);
+                exception.setUrl(url);
+                exception.setStatusCode(200);
+                exception.setErrMsg(getClass().getSimpleName() + "#getParser failure\nreason: " + e.getMessage());
+                throw exception;
             }
         }
         if (parser == null) return null;

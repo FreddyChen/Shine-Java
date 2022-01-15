@@ -5,7 +5,7 @@ import com.freddy.shine.java.exception.RequestException;
 /**
  * 网络请求响应回调适配器
  * <p>
- * 可以按需实现接口回调方法
+ * 可以按需实现接口回调方法<br />
  *
  * @author: FreddyChen
  * @date : 2022/01/14 11:35

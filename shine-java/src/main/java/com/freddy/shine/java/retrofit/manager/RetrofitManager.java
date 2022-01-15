@@ -5,7 +5,7 @@ import android.util.ArrayMap;
 import com.freddy.shine.java.cipher.ICipher;
 import com.freddy.shine.java.retrofit.converter.StringConverterFactory;
 import com.freddy.shine.java.retrofit.interceptor.OkHttpLoggingInterceptor;
-import com.freddy.shine.java.retrofit.interceptor.OkHttpRequestDecryptInterceptor;
+import com.freddy.shine.java.retrofit.interceptor.OkHttpResponseDecryptInterceptor;
 import com.freddy.shine.java.retrofit.interceptor.OkHttpRequestEncryptInterceptor;
 import com.freddy.shine.java.retrofit.interceptor.OkHttpRequestHeaderInterceptor;
 import com.freddy.shine.java.utils.ShineLog;
@@ -20,6 +20,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 
 /**
+ * Retrofit管理类，提供获取OkHttpClient、Retrofit等方法
+ * <p>
+ *
  * @author: FreddyChen
  * @date : 2022/01/14 15:40
  * @email : freddychencsc@gmail.com
@@ -85,7 +88,7 @@ public class RetrofitManager {
                 .addInterceptor(new OkHttpRequestHeaderInterceptor())
                 .addInterceptor(new OkHttpLoggingInterceptor())
                 .addInterceptor(new OkHttpRequestEncryptInterceptor())
-                .addInterceptor(new OkHttpRequestDecryptInterceptor());
+                .addInterceptor(new OkHttpResponseDecryptInterceptor());
         return builder.build();
     }
 
@@ -147,7 +150,7 @@ public class RetrofitManager {
      *
      * @param url baseUrl+function
      */
-    ICipher getCipher(String url) {
+    public ICipher getCipher(String url) {
         if (!mCipherClsMap.containsKey(url)) return null;
         Class<? extends ICipher> cipherCls = mCipherClsMap.get(url);
         if (cipherCls == null) return null;

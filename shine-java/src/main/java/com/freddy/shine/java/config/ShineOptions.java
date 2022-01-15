@@ -6,10 +6,10 @@ import com.freddy.shine.java.parser.IParser;
 /**
  * Shine配置类
  * <p>
- * logEnable          日志开关<br>
- * logTag             日志Tag<br>
- * defaultBaseUrl     默认baseUrl<br>
- * defaultParserCls   默认数据解析器cls<br>
+ * {@link #logEnable}   日志开关<br />
+ * {@link #logTag}      日志Tag<br />
+ * {@link #baseUrl}     默认baseUrl<br />
+ * {@link #parserCls}   默认数据解析器cls<br />
  *
  * @author: FreddyChen
  * @date : 2022/01/14 10:38

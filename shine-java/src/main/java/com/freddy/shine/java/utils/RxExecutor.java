@@ -5,6 +5,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 自定义RxJava线程池
+ * <p>
+ *
  * @author: FreddyChen
  * @date : 2022/01/14 16:48
  * @email : freddychencsc@gmail.com

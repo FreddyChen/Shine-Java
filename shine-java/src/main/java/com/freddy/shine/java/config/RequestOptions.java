@@ -5,12 +5,12 @@ import android.util.ArrayMap;
 /**
  * 请求配置
  * <p>
- * requestMethod 请求方式<br>
- * baseUrl baseUrl<br>
- * function 接口地址<br>
- * headers 请求头<br>
- * params 请求参数<br>
- * contentType contentType<br>
+ * {@link #requestMethod}    请求方式<br />
+ * {@link #baseUrl}          baseUrl<br />
+ * {@link #function}         接口地址<br />
+ * {@link #headers}          请求头<br />
+ * {@link #params}           请求参数<br />
+ * {@link #contentType}      contentType<br />
  *
  * @author: FreddyChen
  * @date : 2022/01/14 10:22
