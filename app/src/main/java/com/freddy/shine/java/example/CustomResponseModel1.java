@@ -1,6 +1,7 @@
 package com.freddy.shine.java.example;
 
 import com.freddy.shine.java.model.IResponseModel;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * @author: FreddyChen
@@ -9,33 +10,36 @@ import com.freddy.shine.java.model.IResponseModel;
  */
 public class CustomResponseModel1<T> implements IResponseModel {
 
-    private int errorCode;
-    private String errorMsg;
-    private T data;
+    @SerializedName("code")
+    private String code;
+    @SerializedName("day")
+    private String day;
+    @SerializedName("result")
+    private T result;
 
-    public int getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
-    public String getErrorMsg() {
-        return errorMsg;
+    public String getDay() {
+        return day;
     }
 
-    public T getData() {
-        return data;
+    public T getResult() {
+        return result;
     }
 
     @Override
     public boolean isSuccessful() {
-        return this.errorCode == 0;
+        return "1".equals(this.code);
     }
 
     @Override
     public String toString() {
         return "CustomResponseModel1{" +
-                "errorCode=" + errorCode +
-                ", errorMsg='" + errorMsg + '\'' +
-                ", data=" + data +
+                "code='" + code + '\'' +
+                ", day='" + day + '\'' +
+                ", result=" + result +
                 '}';
     }
 }

@@ -19,9 +19,17 @@ public class CustomParser2 extends AbstractParser {
     @Override
     public <T> T parse(String url, String data, Type type) throws RequestException {
         ShineLog.i(TAG + "#parse()\ndata = " + data + "\ntype = " + type);
-        String errMsg;
+        String errMsg = null;
+        CustomResponseModel2<T> responseModel = null;
         try {
-            return gson.fromJson(data, type);
+            Type responseType = new TypeToken<CustomResponseModel2<T>>() {
+            }.getType();
+            responseModel = gson.fromJson(data, responseType);
+            if (!responseModel.isSuccessful()) {
+                errMsg = "responseModel is failure";
+            } else {
+                return gson.fromJson(gson.toJson(responseModel.getData()), type);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             errMsg = e.getMessage();
@@ -31,7 +39,8 @@ public class CustomParser2 extends AbstractParser {
         exception.setType(RequestException.Type.NATIVE);
         exception.setUrl(url);
         exception.setStatusCode(200);
-        exception.setErrMsg(TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\ndata = " + data);
+        exception.setErrMsg(TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\nresponseModel = " + responseModel + "\ndata = " + data);
+
         throw exception;
     }
 }

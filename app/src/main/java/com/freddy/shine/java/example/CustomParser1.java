@@ -29,7 +29,7 @@ public class CustomParser1 extends AbstractParser {
             if (!responseModel.isSuccessful()) {
                 errMsg = "responseModel is failure";
             } else {
-                return gson.fromJson(gson.toJson(responseModel.getData()), type);
+                return gson.fromJson(gson.toJson(responseModel.getResult()), type);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +42,15 @@ public class CustomParser1 extends AbstractParser {
         exception.setStatusCode(200);
         exception.setErrMsg(TAG + "#parse() failure\nerrMsg = " + errMsg + "\ntype = " + type + "\nresponseModel = " + responseModel + "\ndata = " + data);
         if (responseModel != null) {
-            exception.setErrCode(responseModel.getErrorCode());
+            Integer errCode = null;
+            try {
+                errCode = Integer.parseInt(responseModel.getCode());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            if (errCode != null) {
+                exception.setErrCode(errCode);
+            }
         }
         throw exception;
     }

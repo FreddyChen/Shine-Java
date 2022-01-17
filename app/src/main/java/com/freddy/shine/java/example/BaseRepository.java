@@ -60,7 +60,7 @@ public abstract class BaseRepository {
     protected RequestOptions.Builder getDefaultRequestOptionsBuilder(RequestMethod requestMethod, String function) {
         return new RequestOptions.Builder()
                 .setRequestMethod(requestMethod)
-                .setBaseUrl("https://www.wanandroid.com/")
+                .setBaseUrl("https://api.oick.cn/")
                 .setFunction(function)
                 .setContentType(NetworkConfig.DEFAULT_CONTENT_TYPE);
     }

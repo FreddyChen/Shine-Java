@@ -15,29 +15,29 @@ import java.util.List;
 public class TestRepository extends BaseRepository {
 
     /**
-     * 获取文章列表数据
+     * 获取历史列表数据
      * 异步请求
      *
      * @param listener
      */
-    public void fetchArticleList(OnResponseListener<ArticleList> listener) {
-        RequestOptions.Builder builder = getDefaultRequestOptionsBuilder(RequestMethod.GET, "article/list/0/json");
-        request(builder.build(), getType(ArticleList.class), CustomParser1.class, null, listener);
+    public void fetchHistoryList(OnResponseListener<List<History>> listener) {
+        RequestOptions.Builder builder = getDefaultRequestOptionsBuilder(RequestMethod.GET, "lishi/api.php");
+        request(builder.build(), getListType(History.class), CustomParser1.class, null, listener);
     }
 
     /**
-     * 获取Cat数据
+     * 获取新闻列表数据
      * 同步请求
      *
      * @return
      * @throws RequestException
      */
-    public List<Cat> fetchCatList() throws RequestException {
+    public List<Journalism> fetchJournalismList() throws RequestException {
         RequestOptions options = new RequestOptions.Builder()
                 .setRequestMethod(RequestMethod.GET)
-                .setBaseUrl("https://cat-fact.herokuapp.com/")
-                .setFunction("facts/random?amount=2&animal_type=cat")
+                .setBaseUrl("http://is.snssdk.com/")
+                .setFunction("api/news/feed/v51/")
                 .build();
-        return syncRequest(options, getListType(Cat.class), CustomParser2.class, null);
+        return syncRequest(options, getListType(Journalism.class), CustomParser2.class, null);
     }
 }

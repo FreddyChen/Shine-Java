@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ShineOptions options = new ShineOptions.Builder()
                 .setLogEnable(true)
                 .setLogTag("FreddyChen")
-                .setBaseUrl("https://www.wanandroid.com/")
+                .setBaseUrl("https://api.oick.cn/")
                 .setParserCls(CustomParser1.class)
                 .build();
         ShineKit.getInstance().init(options);
@@ -36,27 +36,26 @@ public class MainActivity extends AppCompatActivity {
 
         btn1.setOnClickListener(v -> {
             Log.i(TAG, "异步请求开始");
-            repository.fetchArticleList(new ResponseListAdapter<ArticleList>() {
+            repository.fetchHistoryList(new ResponseListAdapter<List<History>>() {
 
                 @Override
                 public void onStart() {
-
-                    Log.i(TAG, "fetchArticleList onStart()");
+                    Log.i(TAG, "fetchHistoryList#onStart()");
                 }
 
                 @Override
-                public void onSuccessful(ArticleList result) {
-                    Log.i(TAG, "fetchArticleList onSuccessful() result = " + result);
+                public void onSuccessful(List<History> result) {
+                    Log.i(TAG, "fetchHistoryList#onSuccessful() historyList = " + result);
                 }
 
                 @Override
                 public void onFailure(RequestException exception) {
-                    Log.i(TAG, "fetchArticleList onFailure() exception = " + exception);
+                    Log.i(TAG, "fetchHistoryList#onFailure() exception = " + exception);
                 }
 
                 @Override
                 public void onFinish() {
-                    Log.i(TAG, "fetchArticleList onFinish()");
+                    Log.i(TAG, "fetchHistoryList#onFinish()");
                 }
             });
             Log.i(TAG, "异步请求结束");
@@ -65,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(v -> new Thread(() -> {
             Log.i(TAG, "同步请求开始");
             try {
-                List<Cat> catList = repository.fetchCatList();
-                Log.i(TAG, "catList = " + catList);
+                List<Journalism> journalismList = repository.fetchJournalismList();
+                Log.i(TAG, "journalismList = " + journalismList);
             } catch (RequestException exception) {
                 exception.printStackTrace();
             }
