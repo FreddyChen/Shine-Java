@@ -5,14 +5,14 @@
 [Shine——更简单的Android网络请求库封装](https://juejin.cn/user/2084329776750989/posts)
 
 ## 使用方式
+代码示例为**Kotlin**版本，Java版本请自行修改。  
 1. 添加依赖
 * **Java**
   `implementation "io.github.freddychen:shine-java:$lastest_version"`
 * **Kotlin**
   `implementation "io.github.freddychen:shine-kotlin:$lastest_version"`
 
-
-*Note：最新版本可在[maven central shine](https://search.maven.org/artifact/io.github.freddychen/shine-kotlin)中找到。*
+*Note：最新版本可在[maven central shine](https://search.maven.org/artifact/io.github.freddychen/shine-java)中找到。*
 
 2. 初始化
    使用**Shine**前进行初始化，建议放到**Application#onCreate()**。
