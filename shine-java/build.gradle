@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 23
+        minSdk 19
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -55,6 +55,6 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = "io.github.freddychen"   // 项目包名
     PUBLISH_ARTIFACT_ID = 'shine-java'			// 项目名
-    PUBLISH_VERSION = '0.0.7'					// 版本号
+    PUBLISH_VERSION = '0.0.8'					// 版本号
 }
 apply from: './scripts/publish-mavencentral.gradle'
